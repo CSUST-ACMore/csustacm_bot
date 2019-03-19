@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Main {
 
-    private static AbilityBot bot;
+    private static MyAbilityBot bot;
 
     public static void main(String[] args) {
 
@@ -24,7 +24,7 @@ public class Main {
     }
 
 
-    public static AbilityBot getBot() {
+    public static MyAbilityBot getBot() {
         if(bot == null) bot = new MyAbilityBot();
         return bot;
     }

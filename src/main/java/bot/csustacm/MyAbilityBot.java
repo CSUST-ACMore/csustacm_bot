@@ -1,8 +1,16 @@
 package bot.csustacm;
 
+import bot.csustacm.ability.BaseAbility;
+import bot.csustacm.ability.ModDalaoAbility;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import static bot.csustacm.Constants.dalaoMap;
+import static bot.csustacm.Main.getBot;
 import static org.telegram.abilitybots.api.objects.Flag.*;
 import static org.telegram.abilitybots.api.objects.Locality.*;
 import static org.telegram.abilitybots.api.objects.Privacy.*;
@@ -21,33 +29,15 @@ public class MyAbilityBot extends AbilityBot {
     }
 
     public Ability hello() {
-        return Ability.builder()
-                .name("hello")
-                .info("hello呀")
-                .locality(ALL)
-                .privacy(PUBLIC)
-                .action(ctx -> silent.send("Hello......"+ ctx.user().getId(), ctx.chatId()))
-                .build();
+        return BaseAbility.helloAbility;
     }
 
     public Ability links() {
-        return Ability.builder()
-                .name("links")
-                .info("获取常用链接")
-                .locality(ALL)
-                .privacy(PUBLIC)
-                .action(ctx -> silent.send(Contants.LINKS, ctx.chatId()))
-                .build();
+        return BaseAbility.linksAbility;
     }
 
-    public Ability sayZhengDaLaoTianXiaDiYi(){
-        return Ability.builder()
-                .name("zdltxdy")
-                .info("tqlwsl")
-                .locality(ALL)
-                .privacy(PUBLIC)
-                .action(ctx -> silent.send("政大佬天下第一！", ctx.chatId()))
-                .build();
+    public Ability sayTianXiaDiYi(){
+        return ModDalaoAbility.sayTxdyAbility;
     }
 
 //    public Ability recordNetFriendMessage(){
@@ -79,9 +69,25 @@ public class MyAbilityBot extends AbilityBot {
                 .privacy(PUBLIC)
                 .locality(ALL)
                 .action(ctx -> {
-                    if (!defaultSwitchOpen) return;
-                    silent.send("沙雕网友嗦的什么几把", ctx.chatId());
+                    Update update = ctx.update();
+                    if(update.hasMessage()) {
+                        Message message = update.getMessage();
+                        if(message.hasText()) {
+                            String s = message.getText();
+                            if(s.contains("Gwolf9")) {
+                                sendMessage("Gwolf9天下第一！", ctx.chatId());
+                            } else if(dalaoMap.containsKey(s)) {
+                                sendMessage(dalaoMap.get(s), ctx.chatId());
+                            }
+                        }
+                    }
                 })
                 .build();
     }
+
+
+    public void sendMessage(String msg, long chatId) {
+        silent.send(msg, chatId);
+    }
+
 }
