@@ -1,4 +1,4 @@
-package ink.hydrofluoric;
+package bot.csustacm;
 
 public class Config {
 

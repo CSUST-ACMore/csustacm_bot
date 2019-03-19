@@ -1,4 +1,4 @@
-package ink.hydrofluoric;
+package bot.csustacm;
 
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
