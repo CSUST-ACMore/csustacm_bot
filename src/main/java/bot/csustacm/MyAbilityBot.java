@@ -70,13 +70,13 @@ public class MyAbilityBot extends AbilityBot {
                 .locality(ALL)
                 .action(ctx -> {
                     Update update = ctx.update();
-                    if(update.hasMessage()) {
+                    if (update.hasMessage()) {
                         Message message = update.getMessage();
-                        if(message.hasText()) {
+                        if (message.hasText()) {
                             String s = message.getText();
-                            if(s.contains("Gwolf9")) {
+                            if (s.contains("Gwolf9")) {
                                 sendMessage("Gwolf9天下第一！", ctx.chatId());
-                            } else if(dalaoMap.containsKey(s)) {
+                            } else if (dalaoMap.containsKey(s)) {
                                 sendMessage(dalaoMap.get(s), ctx.chatId());
                             }
                         }
